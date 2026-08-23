@@ -7,7 +7,7 @@ export const profile = {
   linkedin:
     "https://www.linkedin.com/in/nadir-q%C9%99dirzad%C9%99-667b13408/",
   resumeUrl:
-    "https://drive.google.com/file/d/1BMTG82cRXWEVqYezROA5J48K-MjCG_UR/view?usp=sharing",
+    "https://drive.google.com/file/d/1BMTG82cRXWEVqYezROA5J48K-MjCG_UR/view",
 };
 
 export const badges = [
