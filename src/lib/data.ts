@@ -89,8 +89,326 @@ function getYoutubeId(url: string) {
 
 export const projects: Project[] = [
   {
-    id: "bank-churn-risk",
+    id: "house-prices-regression",
     index: "01",
+    name: "House Prices: EDA & Regression Analysis",
+    tagline: "Multivariate regression on residential sale prices",
+    description:
+      "An end-to-end analysis of residential property prices, combining data cleaning, exploratory analysis, statistical testing, feature engineering, and multivariate regression.",
+    role: "Data Analyst",
+    featured: true,
+    tags: ["DATA ANALYTICS", "STATISTICS", "REGRESSION"],
+    coverImage: "/images/bank-analytics-cover.jpg",
+    githubUrl: "https://github.com/nqedirzade08",
+    caseStudy: {
+      emojiTitle: "🏠 House Prices: EDA & Regression Analysis",
+      intro:
+        "An end-to-end data analysis and regression project focused on understanding the key factors that influence residential property prices and building an interpretable multivariate regression model.",
+      sections: [
+        {
+          heading: "01. The Problem",
+          blocks: [
+            {
+              type: "p",
+              text: "House prices are influenced by many different factors — property quality, living area, garage capacity, neighborhood, age, and other characteristics.",
+            },
+            {
+              type: "p",
+              text: "The challenge was not simply to build a model that predicts house prices, but to understand:",
+            },
+            {
+              type: "sub",
+              text: "What characteristics have the strongest relationship with house prices, and how can statistical analysis and feature engineering improve a regression model?",
+            },
+            {
+              type: "p",
+              text: "The project started with a raw dataset containing 80+ explanatory variables and followed a complete analytical workflow from data cleaning to regression modeling.",
+            },
+          ],
+        },
+        {
+          heading: "02. What I Solved",
+          blocks: [
+            {
+              type: "p",
+              text: "I transformed the raw housing dataset into a structured analytical and regression pipeline by:",
+            },
+            {
+              type: "list",
+              items: [
+                "Cleaning missing and inconsistent data",
+                "Identifying and removing influential outliers",
+                "Performing exploratory data analysis",
+                "Investigating correlations between property characteristics and price",
+                "Comparing prices across neighborhoods and quality levels",
+                "Performing statistical hypothesis testing",
+                "Transforming the skewed target variable",
+                "Engineering new domain-specific features",
+                "Building a baseline OLS regression model",
+                "Building and evaluating a multivariate regression model",
+                "Comparing model performance before and after improvements",
+              ],
+            },
+          ],
+        },
+        {
+          heading: "03. Dataset",
+          blocks: [
+            {
+              type: "p",
+              text: "Dataset: House Prices — Advanced Regression Techniques",
+            },
+            {
+              type: "p",
+              text: "The dataset contains residential property records from Ames, Iowa, with 80+ explanatory variables describing different aspects of each property.",
+            },
+            { type: "p", text: "Target Variable: SalePrice" },
+            {
+              type: "p",
+              text: "The objective was to understand and model the factors associated with residential sale prices.",
+            },
+          ],
+        },
+        {
+          heading: "04. Initial Challenges",
+          blocks: [
+            {
+              type: "p",
+              text: "The raw dataset presented several challenges before modeling could begin.",
+            },
+            { type: "sub", text: "Missing Data" },
+            {
+              type: "p",
+              text: 'Several columns contained extremely high levels of missing values (>80% missing): Alley, PoolQC, Fence, MiscFeature. These features were removed rather than introducing unreliable imputations.',
+            },
+            { type: "p", text: "For the remaining missing values:" },
+            {
+              type: "list",
+              items: [
+                "Numerical features → median imputation",
+                'Categorical features → mode / "None" where appropriate',
+              ],
+            },
+            { type: "sub", text: "Outliers" },
+            {
+              type: "p",
+              text: "Two properties had extremely large living areas (GrLivArea > 4000 sq ft) but were sold for unexpectedly low prices (SalePrice < $300,000). These observations strongly distorted the relationship and were removed from the analytical dataset.",
+            },
+            { type: "sub", text: "Target Skewness" },
+            {
+              type: "p",
+              text: "SalePrice was strongly right-skewed with an initial skewness of 1.88, creating a less favorable distribution for linear regression assumptions.",
+            },
+          ],
+        },
+        {
+          heading: "05. Exploratory Data Analysis",
+          blocks: [
+            { type: "p", text: "Top Correlated Features with SalePrice:" },
+            {
+              type: "list",
+              items: [
+                "OverallQual: 0.7958",
+                "GrLivArea: 0.7350",
+                "TotalBsmtSF: 0.6512",
+                "GarageCars: 0.6410",
+                "1stFlrSF: 0.6315",
+                "GarageArea: 0.6292",
+                "FullBath: 0.5622",
+                "TotRmsAbvGrd: 0.5378",
+                "YearBuilt: 0.5236",
+                "YearRemodAdd: 0.5077",
+              ],
+            },
+            {
+              type: "p",
+              text: "Key Observation: OverallQual was the strongest individual feature correlated with SalePrice (r = 0.7958), showing a stronger relationship than raw living-area measures.",
+            },
+          ],
+        },
+        {
+          heading: "06. Neighborhood Analysis",
+          blocks: [
+            {
+              type: "p",
+              text: "The five neighborhoods with the highest median sale prices were:",
+            },
+            {
+              type: "list",
+              items: [
+                "NridgHt: $315,000",
+                "NoRidge: $301,500",
+                "StoneBr: $278,000",
+                "Timber: $228,475",
+                "Somerst: $225,500",
+              ],
+            },
+          ],
+        },
+        {
+          heading: "07. Statistical Hypothesis Testing",
+          blocks: [
+            { type: "sub", text: "7.1 Welch's Two-Sample T-Test" },
+            {
+              type: "p",
+              text: "Research Question: Is there a statistically significant difference in average house prices between properties with and without Central Air Conditioning?",
+            },
+            {
+              type: "list",
+              items: [
+                "Group Central AC Mean: $186,206.98",
+                "Group No Central AC Mean: $105,264.07",
+                "T-statistic: 17.2670 | P-value: 2.2071e-37 (Reject H₀)",
+              ],
+            },
+            {
+              type: "p",
+              text: "Conclusion: Statistically significant difference (~$81,000 higher average sale price for homes with central AC).",
+            },
+            { type: "sub", text: "7.2 Chi-Square Test of Independence" },
+            { type: "p", text: "Variables: OverallQual vs CentralAir" },
+            {
+              type: "list",
+              items: [
+                "Chi-Square Statistic: 212.6065 | P-value: 7.4945e-41 | Degrees of Freedom: 9 (Reject H₀)",
+              ],
+            },
+            {
+              type: "p",
+              text: "Conclusion: OverallQual and CentralAir are statistically dependent. Higher-quality properties were significantly more likely to have central air conditioning.",
+            },
+          ],
+        },
+        {
+          heading: "08. Baseline Regression Model",
+          blocks: [
+            { type: "p", text: "Model: GrLivArea → SalePrice" },
+            {
+              type: "p",
+              text: "Result: R² = 0.5402 (GrLivArea alone explained approximately 54.02% of the variance in SalePrice).",
+            },
+          ],
+        },
+        {
+          heading: "09. Target Transformation",
+          blocks: [
+            {
+              type: "p",
+              text: "Applied np.log1p(SalePrice) to address target skewness:",
+            },
+            {
+              type: "list",
+              items: [
+                "Original SalePrice Skewness: 1.88",
+                "Log-transformed SalePrice Skewness: 0.12 (Reduced skewness by ~94%).",
+              ],
+            },
+          ],
+        },
+        {
+          heading: "10. Feature Engineering",
+          blocks: [
+            {
+              type: "list",
+              items: [
+                "TotalSF = GrLivArea + TotalBsmtSF (r = 0.8290 with SalePrice, stronger than either individually).",
+                "HouseAge = YrSold - YearBuilt (r = -0.5878 with SalePrice_Log, reflecting lower values for older properties).",
+              ],
+            },
+          ],
+        },
+        {
+          heading: "11. Final Multivariate Regression",
+          blocks: [
+            {
+              type: "p",
+              text: "Model: SalePrice_Log = β₀ + β₁(GrLivArea) + β₂(OverallQual) + β₃(GarageCars) + ε",
+            },
+            {
+              type: "list",
+              items: [
+                "Baseline R²: 54.02%",
+                "Final Multivariate Model R²: 79.68% (Improved explained variance by ~25.6 percentage points).",
+              ],
+            },
+          ],
+        },
+        {
+          heading: "12. Model Interpretation",
+          blocks: [
+            {
+              type: "p",
+              text: "All three predictors were statistically significant (p < 0.001), reinforcing the importance of Property Size + Quality + Garage Capacity when explaining house prices.",
+            },
+          ],
+        },
+        {
+          heading: "13. Key Findings",
+          blocks: [
+            {
+              type: "list",
+              items: [
+                "🏆 Overall Quality was the strongest individual predictor (r = 0.7958).",
+                "🏗️ TotalSF improved the representation of property size (r = 0.8290).",
+                "❄️ Central Air Conditioning showed a statistically significant price difference (~$81,000 higher, p ≈ 2.21 × 10⁻³⁷).",
+                "📈 Feature engineering and transformation improved the model (54.02% → 79.68% R²).",
+              ],
+            },
+          ],
+        },
+        {
+          heading: "14. Limitations & Future Improvements",
+          blocks: [
+            {
+              type: "p",
+              text: "Potential multicollinearity/feature-scale issues indicated by OLS condition number.",
+            },
+            {
+              type: "p",
+              text: "Future steps: Ridge/Lasso Regression, Cross-validation, Residual diagnostics, Tree-based models (Random Forest, Gradient Boosting).",
+            },
+          ],
+        },
+        {
+          heading: "15. Technical Skills Demonstrated",
+          blocks: [
+            {
+              type: "list",
+              items: [
+                "Programming: Python",
+                "Data Analysis: Pandas, NumPy, Data Cleaning, Data Transformation, EDA",
+                "Visualization: Matplotlib, Seaborn",
+                "Statistics: Descriptive Statistics, Correlation Analysis, Welch's T-Test, Chi-Square Test, P-values, Hypothesis Testing",
+                "Machine Learning / Modeling: Linear Regression, OLS, Feature Engineering, Target Transformation, Model Evaluation",
+                "Statistical Computing: SciPy, Statsmodels",
+              ],
+            },
+          ],
+        },
+        {
+          heading: "16. What This Project Demonstrates",
+          blocks: [
+            {
+              type: "p",
+              text: "Raw Data → Data Cleaning → Outlier Treatment → EDA → Statistical Testing → Target Transformation → Feature Engineering → Baseline Regression → Multivariate Regression → Model Evaluation.",
+            },
+          ],
+        },
+        {
+          heading: "17. Conclusion",
+          blocks: [
+            {
+              type: "p",
+              text: "Starting from a single-feature baseline with an R² of 54.02%, the final multivariate model explained 79.68% of the variance in the log-transformed sale price.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    id: "bank-churn-risk",
+    index: "02",
     name: "Bank Customer Churn & Risk Analysis",
     tagline: "Statistical churn & portfolio risk analysis",
     description:
@@ -331,7 +649,7 @@ export const projects: Project[] = [
   },
   {
     id: "bank-marketing-campaign",
-    index: "02",
+    index: "03",
     name: "Bank Marketing Campaign Analysis",
     tagline: "Segmentation & hypothesis testing on term deposits",
     description:
@@ -511,7 +829,7 @@ export const projects: Project[] = [
   },
   {
     id: "abituriyentx",
-    index: "03",
+    index: "04",
     name: "AbituriyentX",
     tagline: "AI-guided university major selection",
     description:
@@ -522,7 +840,7 @@ export const projects: Project[] = [
   },
   {
     id: "medscan-ai",
-    index: "04",
+    index: "05",
     name: "MedScan AI",
     tagline: "AI-powered medical image analysis",
     description:
@@ -533,7 +851,7 @@ export const projects: Project[] = [
   },
   {
     id: "smartcitypulse",
-    index: "05",
+    index: "06",
     name: "SmartCityPulse",
     tagline: "Real-time urban infrastructure monitoring",
     description:
