@@ -554,7 +554,7 @@ export const achievements = [
   {
     id: "pitch",
     title: "Pitch Presentation",
-    subtitle: "Presenting AbituriyentX on stage",
+    subtitle: "Presenting MedScan AI on stage",
     image: "/images/award-pitch.jpg",
   },
 ];
