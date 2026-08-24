@@ -99,7 +99,7 @@ export const projects: Project[] = [
     featured: true,
     tags: ["DATA ANALYTICS", "STATISTICS", "REGRESSION"],
     coverImage: "/images/bank-analytics-cover.jpg",
-    githubUrl: "https://github.com/nqedirzade08",
+    githubUrl: "https://github.com/nqedirzade08/House-Prices-End-to-End-EDA-Regression-Analysis",
     caseStudy: {
       emojiTitle: "🏠 House Prices: EDA & Regression Analysis",
       intro:
