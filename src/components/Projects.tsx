@@ -156,7 +156,7 @@ export default function Projects() {
         <SectionHeading
           index="02"
           eyebrow="Selected work"
-          title="Five problems worth building for."
+          title="Projects"
           description="Statistical case studies and founder-led / hackathon builds — spanning risk analysis, civic data, medical imaging, and education."
         />
 
