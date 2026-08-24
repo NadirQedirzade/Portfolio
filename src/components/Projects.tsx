@@ -157,7 +157,7 @@ export default function Projects() {
           index="02"
           eyebrow="Selected work"
           title="Projects"
-          description="Statistical case studies and founder-led / hackathon builds — spanning risk analysis, civic data, medical imaging, and education."
+          description="Statistical & regression case studies and founder-led / hackathon builds — spanning house-price modeling, risk analysis, civic data, medical imaging, and education."
         />
 
         <div className="mb-6 space-y-6">
