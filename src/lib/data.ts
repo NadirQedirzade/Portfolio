@@ -89,8 +89,269 @@ function getYoutubeId(url: string) {
 
 export const projects: Project[] = [
   {
-    id: "house-prices-regression",
+    id: "predictive-maintenance-defense",
     index: "01",
+    name: "Predictive Maintenance Analytics for Defense-Grade Equipment",
+    tagline: "Reliability & failure pattern analysis, no ML",
+    description:
+      "An end-to-end exploratory data analysis of equipment reliability and failure patterns for defense-grade machinery, using sensor telemetry and pure statistical reasoning — no machine learning.",
+    role: "Data Analyst",
+    featured: true,
+    tags: ["DATA ANALYTICS", "RELIABILITY ENGINEERING", "EDA"],
+    coverImage: "/images/predictive-maintenance-cover.jpg",
+    githubUrl:
+      "https://github.com/nqedirzade08/Predictive-Maintenance-Analytics-for-Defense-Grade-Equipment-A-Reliability-Failure-Pattern-Analysis/tree/main",
+    caseStudy: {
+      emojiTitle:
+        "🛡️ Predictive Maintenance Analytics for Defense-Grade Equipment: A Reliability & Failure Pattern Analysis",
+      intro:
+        "An end-to-end exploratory data analysis project focused on understanding equipment reliability, failure patterns, and operational risk factors for industrial/defense-grade machinery, using sensor telemetry data and pure Python analytical tooling (no ML frameworks).",
+      sections: [
+        {
+          heading: "01. The Problem",
+          blocks: [
+            {
+              type: "p",
+              text: "Defense and industrial equipment fleets generate continuous sensor telemetry, but raw numbers alone don't tell maintenance teams when or why equipment is likely to fail.",
+            },
+            {
+              type: "p",
+              text: "The challenge was not to build a predictive classifier, but to answer:",
+            },
+            {
+              type: "sub",
+              text: "Which operational conditions and equipment classes are most associated with failure, and how can that inform maintenance prioritization?",
+            },
+            {
+              type: "p",
+              text: "The project followed a complete analytical workflow — from raw sensor data to a reliability dashboard — using only NumPy, Pandas, Matplotlib, and Seaborn, deliberately excluding machine learning to focus purely on statistical and visual reasoning.",
+            },
+          ],
+        },
+        {
+          heading: "02. What I Solved",
+          blocks: [
+            {
+              type: "p",
+              text: "I transformed a raw industrial sensor dataset into a structured reliability-analytics report by:",
+            },
+            {
+              type: "list",
+              items: [
+                "Cleaning and validating 10,000 sensor records across 14 variables",
+                "Detecting outliers using the IQR method on load-related variables",
+                "Auditing logical consistency between failure-type flags and the overall failure indicator",
+                "Performing exploratory analysis across equipment classes",
+                "Investigating correlations between temperature, torque, rotational speed, and failure events",
+                "Engineering a domain-specific feature (temperature differential) to isolate a thermal failure signal",
+                "Profiling failure modes by their operating conditions at time of failure",
+                "Calculating fleet-wide and class-wise reliability KPIs",
+                "Building a consolidated 6-panel reliability dashboard for executive reporting",
+              ],
+            },
+          ],
+        },
+        {
+          heading: "03. Dataset",
+          blocks: [
+            {
+              type: "p",
+              text: "Dataset: AI4I 2020 Predictive Maintenance Dataset",
+            },
+            {
+              type: "p",
+              text: "10,000 records describing equipment sensor readings — air temperature, process temperature, rotational speed, torque, and tool wear — across three equipment classes (Low / Medium / High duty), reframed for a defense-industry maintenance context.",
+            },
+            {
+              type: "p",
+              text: "Target of interest: Machine failure (binary), broken down into five failure subtypes: Tool Wear Failure (TWF), Heat Dissipation Failure (HDF), Power Failure (PWF), Overstrain Failure (OSF), and Random Failure (RNF).",
+            },
+          ],
+        },
+        {
+          heading: "04. Initial Challenges",
+          blocks: [
+            { type: "sub", text: "Missing Data & Duplicates" },
+            {
+              type: "p",
+              text: "None. The dataset had zero missing values and zero duplicate rows across all 14 columns — unusually clean for a real-world sensor source, which was itself worth flagging rather than assuming.",
+            },
+            { type: "sub", text: "Outliers" },
+            { type: "p", text: "Using the IQR method:" },
+            {
+              type: "list",
+              items: [
+                "Rotational Speed: 418 outliers (upper bound 1895.5 rpm)",
+                "Torque: 69 outliers (upper bound 67.2 Nm)",
+                "Tool Wear: 0 outliers (lower bound was negative, i.e., no real ceiling)",
+              ],
+            },
+            {
+              type: "p",
+              text: "These were deliberately not removed — in an operational equipment context, extreme readings often represent real high-load conditions rather than data errors, and removing them would erase exactly the signal a reliability analysis needs.",
+            },
+            { type: "sub", text: "Logical Consistency Audit" },
+            {
+              type: "p",
+              text: 'Cross-checking the five failure-subtype flags against the overall failure indicator revealed 18 rows where a subtype flag (all cases: RNF) was active but the overall failure flag was False. Rather than "fixing" this, I documented it as a data quality anomaly consistent with the dataset\'s known random/false-alarm injection — the kind of sensor calibration noise a real monitoring system would need to account for.',
+            },
+          ],
+        },
+        {
+          heading: "05. Exploratory Data Analysis",
+          blocks: [
+            { type: "p", text: "Key distribution findings:" },
+            {
+              type: "list",
+              items: [
+                "Air temperature showed a bimodal distribution (peaks near 298K and 301K), suggesting two distinct operating regimes",
+                "Rotational speed was right-skewed, concentrated in 1400–1600 rpm",
+                "Torque was approximately symmetric around ~40 Nm",
+              ],
+            },
+            { type: "p", text: "Top correlations with Machine Failure:" },
+            {
+              type: "list",
+              items: [
+                "HDF: r = 0.58",
+                "OSF: r = 0.53",
+                "PWF: r = 0.52",
+                "TWF: r = 0.36",
+              ],
+            },
+            {
+              type: "p",
+              text: "Key Observation: Rotational Speed and Torque were strongly inversely correlated (r = −0.88), consistent with the physical power law (Power = Torque × Angular Speed) — a sanity check that the sensor data behaved physically as expected.",
+            },
+          ],
+        },
+        {
+          heading: "06. Equipment Class Analysis",
+          blocks: [
+            { type: "p", text: "Failure rate by equipment class:" },
+            {
+              type: "list",
+              items: [
+                "Low-duty class: 3.92% (235 / 6,000) — highest failure rate",
+                "Medium-duty class: 2.77% (83 / 2,997)",
+                "High-duty class: 2.09% (21 / 1,003) — most reliable",
+              ],
+            },
+            {
+              type: "p",
+              text: "Despite near-identical average operating conditions across all three classes (temperature, speed, and torque means differed by less than 0.2 units), failure rates diverged meaningfully — pointing to construction/material quality differences rather than operating environment as the driver.",
+            },
+          ],
+        },
+        {
+          heading: "07. Correlation Analysis & Feature Engineering",
+          blocks: [
+            {
+              type: "p",
+              text: "Engineered Temp_Diff = Process_Temperature − Air_Temperature to isolate thermal dissipation efficiency as a standalone signal.",
+            },
+            {
+              type: "p",
+              text: "Finding: Temp_Diff correlated negatively with HDF (r = −0.19) — heat dissipation failures cluster specifically where the temperature differential is small despite high absolute temperatures, i.e., where the cooling system is failing to do its job under thermal load.",
+            },
+          ],
+        },
+        {
+          heading: "08. Failure Mode Profiling",
+          blocks: [
+            {
+              type: "p",
+              text: "Average conditions at time of failure, by subtype:",
+            },
+            {
+              type: "list",
+              items: [
+                "TWF — Avg. Tool Wear: 216.4 min · Avg. Torque: 37.8 Nm · Avg. Temp Diff: 9.9 K",
+                "HDF — Avg. Tool Wear: 107.2 min · Avg. Torque: 53.2 Nm · Avg. Temp Diff: 8.2 K",
+                "PWF — Avg. Tool Wear: 101.9 min · Avg. Torque: 48.5 Nm · Avg. Temp Diff: 9.9 K",
+                "OSF — Avg. Tool Wear: 207.7 min · Avg. Torque: 58.4 Nm · Avg. Temp Diff: 10.0 K",
+              ],
+            },
+            {
+              type: "p",
+              text: "Key Observation: OSF (Overstrain Failure) combines both high wear and the highest torque — a compounding stress failure — while HDF and PWF occur at much lower wear, indicating they are sudden-onset failures rather than gradual degradation.",
+            },
+          ],
+        },
+        {
+          heading: "09. Reliability KPIs",
+          blocks: [
+            {
+              type: "list",
+              items: [
+                "Fleet-wide failure rate: 3.39% (339 / 10,000)",
+                "Average tool wear at failure (all types): 143.78 minutes",
+                "Dominant failure mode: HDF, accounting for 33.92% of all failures (115 / 339)",
+              ],
+            },
+          ],
+        },
+        {
+          heading: "10. Key Findings",
+          blocks: [
+            {
+              type: "list",
+              items: [
+                "🌡️ Heat Dissipation Failure (HDF) is the single largest contributor to equipment failure (33.92%), directly tied to cooling system effectiveness under high-temperature, low-differential conditions.",
+                "⚙️ Rotational Speed and Torque exhibit a strong physical inverse relationship (r = −0.88); failures cluster at both extremes of this curve — high-torque/low-speed and high-speed/low-torque.",
+                "🏗️ Low-duty class equipment has the highest failure rate (3.92%) despite operating under nearly identical conditions to other classes — indicating a construction-quality gap rather than an environmental one.",
+                "📊 Overstrain Failure (OSF) is a compounding failure mode: it occurs at both the highest average torque (58.4 Nm) and near-highest wear (207.7 min).",
+              ],
+            },
+          ],
+        },
+        {
+          heading: "11. Limitations & Future Improvements",
+          blocks: [
+            {
+              type: "p",
+              text: "This project was intentionally restricted to descriptive analytics — no predictive modeling was performed, by design, to keep the focus on statistical reasoning and visual communication. Natural next steps would include: logistic regression or tree-based classification for failure prediction, survival analysis for time-to-failure modeling, and class-imbalance handling given the 3.39% failure rate.",
+            },
+          ],
+        },
+        {
+          heading: "12. Technical Skills Demonstrated",
+          blocks: [
+            {
+              type: "list",
+              items: [
+                "Programming: Python",
+                "Data Analysis: Pandas, NumPy, IQR outlier detection, data validation/consistency auditing",
+                "Visualization: Matplotlib, Seaborn (histograms, KDE, boxplots, heatmaps, scatter plots, multi-panel dashboards)",
+                "Domain Reasoning: Reliability engineering concepts, failure-mode profiling, physical sanity-checking of sensor relationships",
+              ],
+            },
+          ],
+        },
+        {
+          heading: "13. What This Project Demonstrates",
+          blocks: [
+            {
+              type: "p",
+              text: "Raw Sensor Data → Data Validation & Consistency Auditing → Outlier Analysis → EDA → Correlation Analysis → Feature Engineering → Failure Mode Profiling → KPI Calculation → Executive Reliability Dashboard.",
+            },
+          ],
+        },
+        {
+          heading: "14. Conclusion",
+          blocks: [
+            {
+              type: "p",
+              text: "Starting from a raw 10,000-record sensor dataset with no obvious structure, the analysis isolated heat dissipation as the dominant failure driver (33.92% of all failures) and identified a clear equipment-class reliability gap (3.92% vs 2.09% failure rate) — insights directly actionable for maintenance prioritization, without requiring a predictive model.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    id: "house-prices-regression",
+    index: "02",
     name: "House Prices: EDA & Regression Analysis",
     tagline: "Multivariate regression on residential sale prices",
     description:
@@ -408,7 +669,7 @@ export const projects: Project[] = [
   },
   {
     id: "bank-churn-risk",
-    index: "02",
+    index: "03",
     name: "Bank Customer Churn & Risk Analysis",
     tagline: "Statistical churn & portfolio risk analysis",
     description:
@@ -649,7 +910,7 @@ export const projects: Project[] = [
   },
   {
     id: "bank-marketing-campaign",
-    index: "03",
+    index: "04",
     name: "Bank Marketing Campaign Analysis",
     tagline: "Segmentation & hypothesis testing on term deposits",
     description:
@@ -829,7 +1090,7 @@ export const projects: Project[] = [
   },
   {
     id: "abituriyentx",
-    index: "04",
+    index: "05",
     name: "AbituriyentX",
     tagline: "AI-guided university major selection",
     description:
@@ -840,7 +1101,7 @@ export const projects: Project[] = [
   },
   {
     id: "medscan-ai",
-    index: "05",
+    index: "06",
     name: "MedScan AI",
     tagline: "AI-powered medical image analysis",
     description:
@@ -851,7 +1112,7 @@ export const projects: Project[] = [
   },
   {
     id: "smartcitypulse",
-    index: "06",
+    index: "07",
     name: "SmartCityPulse",
     tagline: "Real-time urban infrastructure monitoring",
     description:
