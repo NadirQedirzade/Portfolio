@@ -33,7 +33,7 @@ export const badges = [
 
 export const aboutParagraphs = [
   "I am a Mechatronics and Robotics Engineering student at Azerbaijan Technical University, building my career toward becoming a Machine Learning Engineer. My current focus is on developing a strong foundation in data analysis, mathematics, statistics, and programming — essential skills for working effectively with machine learning.",
-  "I work with Python, NumPy, Pandas, Matplotlib, and Seaborn, and I am currently expanding my skills in SQL, Power BI, and Excel to strengthen my understanding of data and analytical workflows. After building this foundation, my next step is to advance into Machine Learning and Deep Learning with Scikit-learn, PyTorch, and TensorFlow, followed by specialization in Computer Vision and Natural Language Processing."
+  "I work with Python, NumPy, Pandas, Matplotlib, Seaborn, and SQL, and I am currently expanding my skills in Power BI and Excel to strengthen my understanding of data and analytical workflows. After building this foundation, my next step is to advance into Machine Learning and Deep Learning with Scikit-learn, PyTorch, and TensorFlow, followed by specialization in Computer Vision and Natural Language Processing."
 ];
 
 export const skills = {
@@ -43,10 +43,11 @@ export const skills = {
     "Statistics",
     "NumPy",
     "Pandas",
-    "Matplotlib", 
-    "Seaborn"
+    "Matplotlib",
+    "Seaborn",
+    "SQL",
   ],
-  inProgress: ["SQL", "Power BI", "Excel"],
+  inProgress: ["Power BI", "Excel"],
   next: ["Scikit-learn", "PyTorch", "Computer Vision", "NLP"],
 };
 
@@ -1209,6 +1210,16 @@ export const certificates = [
     id: "cert-14",
     title: "AzTU Startup Days — Participation",
     src: "/certificates/cert-14.jpg",
+  },
+  {
+    id: "cert-15",
+    title: "IBM — Introduction to Data Analytics (Coursera)",
+    src: "/certificates/cert-15.jpg",
+  },
+  {
+    id: "cert-16",
+    title: "NeuroBridge AI Hackathon Baku 2026 — Participation",
+    src: "/certificates/cert-16.jpg",
   },
 ];
 
