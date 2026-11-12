@@ -1,0 +1,525 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Themes — designed separately, not inverted.
+
+   Dark  · graphite. Never pure black; surfaces step up in small increments and
+           are separated by 1px borders rather than shadows.
+   Light · off-white "engineering notebook": a warm-neutral page with a very
+           faint technical grid, and pure-white surfaces that sit on top of it.
+
+   <html data-theme="light|dark"> is set before first paint (layout.tsx). With
+   no attribute (JS off) the OS preference decides. Colors are RGB channels so
+   Tailwind opacity modifiers keep working.
+   ────────────────────────────────────────────────────────────────────────── */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: 13 13 13; /* #0D0D0D page */
+  --surface: 23 23 23; /* #171717 panels */
+  --surface2: 31 31 31; /* #1F1F1F media placeholders, hover */
+  --surface3: 42 42 42; /* #2A2A2A */
+  --paper: 245 245 245; /* #F5F5F5 primary text */
+  --muted: 161 161 170; /* #A1A1AA secondary text */
+  --subtle: 139 139 148; /* #8B8B94 tertiary text (AA on all surfaces) */
+  --accent: 102 212 207; /* brand mint, calmed */
+  --accent-fill: 102 212 207;
+  --accent-fill-hover: 130 224 220;
+  --on-accent: 13 13 13;
+  --line: #2a2a2a;
+  --line-strong: #52525b;
+  --fill: rgba(255, 255, 255, 0.045);
+  --fill-hover: rgba(255, 255, 255, 0.085);
+  --scrollbar: #3a3a3c;
+  --grid: rgba(255, 255, 255, 0.035);
+  --page-grid: none;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --ink: 248 249 250; /* #F8F9FA page */
+  --surface: 255 255 255; /* #FFFFFF panels */
+  --surface2: 238 240 242; /* #EEF0F2 */
+  --surface3: 229 231 235; /* #E5E7EB */
+  --paper: 17 24 39; /* #111827 */
+  --muted: 75 85 99; /* #4B5563 */
+  --subtle: 95 102 116; /* #5F6674 (brief's #6B7280 is 4.2:1 on tiles) */
+  --accent: 15 118 110; /* deep teal: mint text on off-white fails contrast */
+  --accent-fill: 15 118 110;
+  --accent-fill-hover: 17 94 89;
+  --on-accent: 255 255 255;
+  --line: #d1d5db;
+  --line-strong: #9ca3af;
+  --fill: rgba(17, 24, 39, 0.045);
+  --fill-hover: rgba(17, 24, 39, 0.08);
+  --scrollbar: #c7c9ce;
+  --grid: rgba(17, 24, 39, 0.055);
+  --page-grid: linear-gradient(to right, rgba(17, 24, 39, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 24, 39, 0.04) 1px, transparent 1px);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --ink: 248 249 250;
+    --surface: 255 255 255;
+    --surface2: 238 240 242;
+    --surface3: 229 231 235;
+    --paper: 17 24 39;
+    --muted: 75 85 99;
+    --subtle: 95 102 116;
+    --accent: 15 118 110;
+    --accent-fill: 15 118 110;
+    --accent-fill-hover: 17 94 89;
+    --on-accent: 255 255 255;
+    --line: #d1d5db;
+    --line-strong: #9ca3af;
+    --fill: rgba(17, 24, 39, 0.045);
+    --fill-hover: rgba(17, 24, 39, 0.08);
+    --scrollbar: #c7c9ce;
+    --grid: rgba(17, 24, 39, 0.055);
+    --page-grid: linear-gradient(to right, rgba(17, 24, 39, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(17, 24, 39, 0.04) 1px, transparent 1px);
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Foundations
+   ────────────────────────────────────────────────────────────────────────── */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  /* Critically damped spring (damping ratio 1.0) sampled into a CSS easing so
+     press/release is physical without JS. Falls back to --ease-out. */
+  --spring: var(--ease-out);
+}
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --spring: linear(
+      0, 0.0365, 0.1205, 0.2252, 0.3344, 0.4387, 0.5334, 0.6166, 0.6879,
+      0.7479, 0.7977, 0.8386, 0.8718, 0.8987, 0.9202, 0.9373, 0.9509, 0.9617,
+      0.9702, 0.9768, 0.982, 0.9861, 0.9892, 0.9917, 1
+    );
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar) transparent;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background-color: rgb(var(--ink));
+  /* Light mode only: a faint 80px technical grid. Panels are opaque, so the
+     grid shows through the page and stops at every surface, like ruled paper. */
+  background-image: var(--page-grid);
+  background-size: 80px 80px;
+  color: rgb(var(--paper));
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  letter-spacing: -0.011em;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+[id] {
+  scroll-margin-top: 3rem;
+}
+
+::selection {
+  background: rgb(var(--accent-fill));
+  color: rgb(var(--on-accent));
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 3px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+/* Containers focused programmatically (dialogs) aren't controls — no ring. */
+[tabindex="-1"]:focus-visible {
+  outline: none;
+}
+
+img {
+  -webkit-user-drag: none;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Type scale. Sans carries the voice; mono is reserved for labels, indices
+   and technical metadata. Tracking tightens as size grows.
+   ────────────────────────────────────────────────────────────────────────── */
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-6xl px-6 md:px-10;
+  }
+  .section-y {
+    @apply py-20 md:py-32;
+  }
+
+  /* The name: the dominant element of the hero. Two lines ("Nadir" /
+     "Qədirzadə"), scaling from 56px on phones to 120px on large screens. */
+  .t-name {
+    font-size: clamp(3.5rem, 10.5vw, 7.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    font-weight: 600;
+  }
+  .t-title {
+    font-size: clamp(2.125rem, 4.6vw, 3.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.032em;
+    font-weight: 600;
+  }
+  .t-headline {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.024em;
+    font-weight: 600;
+  }
+  .t-subhead {
+    font-size: 1.3125rem;
+    line-height: 1.22;
+    letter-spacing: -0.018em;
+    font-weight: 600;
+  }
+  .t-lede {
+    font-size: clamp(1.1875rem, 1.9vw, 1.5rem);
+    line-height: 1.42;
+    letter-spacing: -0.018em;
+  }
+  .t-body {
+    font-size: 1.0625rem;
+    line-height: 1.62;
+    letter-spacing: -0.011em;
+  }
+  .t-small {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    letter-spacing: -0.008em;
+  }
+  .t-caption {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    letter-spacing: -0.003em;
+  }
+  /* Section / group labels: small, uppercase, mono. */
+  .t-eyebrow {
+    @apply font-mono;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  /* Technical metadata: indices, tags, build-log text. */
+  .t-meta {
+    @apply font-mono;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    letter-spacing: 0;
+  }
+
+  /* ────────────────────────────────────────────────────────────────────────
+     Buttons. One component everywhere; 8px radius, 1px borders.
+     Feedback starts on press and settles on a spring (color uses a plain ease,
+     only transform springs).
+     ──────────────────────────────────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem; /* 44px touch target */
+    padding: 0 1.125rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.012em;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition-property: transform, background-color, border-color, color;
+    transition-duration: 500ms, 160ms, 160ms, 160ms;
+    transition-timing-function: var(--spring), ease, ease, ease;
+  }
+  .btn:active {
+    transform: scale(0.98);
+    transition-duration: 90ms, 160ms, 160ms, 160ms;
+    transition-timing-function: var(--ease-out), ease, ease, ease;
+  }
+  .btn-primary {
+    background-color: rgb(var(--accent-fill));
+    color: rgb(var(--on-accent));
+  }
+  .btn-secondary {
+    border-color: var(--line);
+    color: rgb(var(--paper));
+  }
+  .btn-sm {
+    min-height: 2rem;
+    padding: 0 0.8125rem;
+    font-size: 0.8125rem;
+  }
+
+  /* Text action ("View Case Study", GitHub). A hairline sits under it; on
+     hover an accent line draws across it, left to right. */
+  .link-action {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.75rem; /* fixed so every link's underline sits at the same y */
+    white-space: nowrap; /* a link label never wraps */
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    color: rgb(var(--paper));
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .link-action::before,
+  .link-action::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.6rem;
+    height: 1px;
+  }
+  .link-action::after {
+    background: var(--line-strong);
+  }
+  .link-action::before {
+    z-index: 1;
+    background: rgb(var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 360ms var(--ease-out);
+  }
+
+  /* Pressable surfaces that aren't buttons. */
+  .press {
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 500ms var(--spring);
+  }
+  .press:active {
+    transform: scale(0.98);
+    transition: transform 90ms var(--ease-out);
+  }
+
+  /* Arrow glyphs nudge toward their direction on hover. */
+  .nudge {
+    transition: transform 220ms var(--ease-out);
+  }
+
+  /* Project entry. The row's top rule shifts one step darker on hover or
+     keyboard focus, and a short accent tick grows at its left end. Restrained
+     on purpose: no glow, no movement of the content. */
+  .row {
+    position: relative;
+    transition: border-color 280ms ease;
+  }
+  .row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 2.5rem;
+    height: 1px;
+    background: rgb(var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 420ms var(--ease-out);
+  }
+  .row:focus-within {
+    border-top-color: var(--line-strong);
+  }
+  .row:focus-within::before {
+    transform: scaleX(1);
+  }
+
+  /* Monochrome imagery: photos rest in grayscale (cohesive, high-contrast)
+     and return to color on hover. */
+  .tone {
+    filter: grayscale(1) contrast(1.04);
+    transition: filter 450ms ease, transform 700ms var(--ease-out);
+  }
+
+  /* Hero technical grid (dark mode; light mode uses the page grid). */
+  .grid-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: 80px 80px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
+  }
+}
+:root[data-theme="light"] .grid-bg::before {
+  display: none;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .grid-bg::before {
+    display: none;
+  }
+}
+
+/* Hover only where a real pointer exists — touch never gets stuck states. */
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    background-color: rgb(var(--accent-fill-hover));
+  }
+  .btn-secondary:hover {
+    border-color: var(--line-strong);
+    background-color: var(--fill);
+  }
+  .link-action:hover::before {
+    transform: scaleX(1);
+  }
+  .group:hover .nudge,
+  .btn:hover .nudge,
+  .link-action:hover .nudge {
+    transform: translate(2px, -2px);
+  }
+  .row:hover {
+    border-top-color: var(--line-strong);
+  }
+  .row:hover::before {
+    transform: scaleX(1);
+  }
+  .group:hover .tone {
+    filter: grayscale(0) contrast(1);
+  }
+  .group:hover .zoom-img {
+    transform: scale(1.02);
+  }
+}
+
+.link-action:focus-visible::before {
+  transform: scaleX(1);
+}
+
+/* Header / sheet surface — solid, no blur (no glassmorphism). */
+.material {
+  background-color: rgb(var(--ink) / 0.94);
+}
+
+.zoom-img {
+  transition: transform 700ms var(--ease-out);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Accessibility adaptations
+   ────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .btn,
+  .press,
+  .nudge,
+  .zoom-img,
+  .tone,
+  .link-action::before,
+  .row::before {
+    transition-property: background-color, border-color, color, filter, opacity !important;
+    transition-duration: 150ms !important;
+  }
+  .btn:active,
+  .press:active {
+    transform: none;
+  }
+  .group:hover .nudge,
+  .btn:hover .nudge,
+  .link-action:hover .nudge,
+  .group:hover .zoom-img {
+    transform: none;
+  }
+}
+
+/* Increase Contrast: firmer separators and secondary text, per theme. */
+@media (prefers-contrast: more) {
+  :root,
+  :root[data-theme="dark"] {
+    --muted: 209 209 214;
+    --subtle: 174 174 178;
+    --line: #6b6b73;
+    --line-strong: #a1a1aa;
+    --fill: rgba(255, 255, 255, 0.14);
+  }
+  :root[data-theme="light"] {
+    --muted: 55 65 81;
+    --subtle: 75 85 99;
+    --line: #6b7280;
+    --line-strong: #4b5563;
+    --fill: rgba(17, 24, 39, 0.1);
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Logo + theme toggle
+   ────────────────────────────────────────────────────────────────────────── */
+/* The NQ mark is silver-on-dark artwork; in light mode it is inverted to
+   charcoal (it is grayscale, so the inversion is lossless). */
+.logo-mark {
+  transition: filter 280ms ease;
+}
+:root[data-theme="light"] .logo-mark {
+  filter: invert(1);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .logo-mark {
+    filter: invert(1);
+  }
+}
+
+.theme-icon {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transition: transform 500ms var(--spring), opacity 200ms ease;
+}
+:root[data-theme="dark"] .theme-sun,
+:root:not([data-theme]) .theme-sun {
+  opacity: 0;
+  transform: rotate(-70deg) scale(0.5);
+}
+:root[data-theme="light"] .theme-moon {
+  opacity: 0;
+  transform: rotate(70deg) scale(0.5);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .theme-sun {
+    opacity: 1;
+    transform: none;
+  }
+  :root:not([data-theme]) .theme-moon {
+    opacity: 0;
+    transform: rotate(70deg) scale(0.5);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-icon {
+    transition: opacity 150ms ease !important;
+    transform: none !important;
+  }
+}
+
+/* Theme switch cross-fades the page where View Transitions is supported. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
