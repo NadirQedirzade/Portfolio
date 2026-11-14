@@ -1,6 +1,6 @@
 # Nadir Qədirzadə — Portfolio
 
-A minimalist, dark-themed portfolio built with Next.js 14 (App Router + TypeScript), Tailwind CSS, and Framer Motion. Positioned as a Data Analysis / Data Science portfolio with an engineering background in support. Design direction: Apple-level restraint combined with an engineering-notebook feel — graphite dark mode and an off-white, faintly ruled light mode (designed separately, not inverted), the system font for text with monospace reserved for labels and the build log, 1px borders instead of cards or shadows, one calm accent, and spring-based motion that respects `prefers-reduced-motion`.
+A minimalist, dark-themed portfolio built with Next.js 14 (App Router + TypeScript), Tailwind CSS, and Framer Motion. Positioned as a Data Analysis / Data Science portfolio with an engineering background in support. Design direction: Apple-level restraint combined with an engineering-notebook feel (monospace labels, hairline rules) — graphite dark mode and an off-white light mode (designed separately, not inverted), both on flat solid backgrounds, the system font for text with monospace reserved for labels and the build log, 1px borders instead of cards or shadows, one calm accent, and spring-based motion that respects `prefers-reduced-motion`.
 
 ## File architecture
 
