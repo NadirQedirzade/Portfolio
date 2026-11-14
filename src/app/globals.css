@@ -347,10 +347,10 @@ img {
     transform: scaleX(1);
   }
 
-  /* Monochrome imagery: photos rest in grayscale (cohesive, high-contrast)
-     and return to color on hover. */
+  /* Monochrome imagery (desktop only): photos and logos rest in grayscale and
+     return to color on hover. Phones and other touch devices have no hover, so
+     there they are always shown in full color — see the media query below. */
   .tone {
-    filter: grayscale(1) contrast(1.04);
     transition: filter 450ms ease, transform 700ms var(--ease-out);
   }
 
@@ -373,6 +373,14 @@ img {
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) .grid-bg::before {
     display: none;
+  }
+}
+
+/* Grayscale applies only on a desktop-sized viewport with a real pointer.
+   Narrow windows and every touch device (phones, tablets) keep full color. */
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .tone {
+    filter: grayscale(1) contrast(1.04);
   }
 }
 
