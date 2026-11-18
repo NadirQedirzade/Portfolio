@@ -49,7 +49,7 @@ export const skills = {
     "Power BI",
   ],
   inProgress: ["Excel"],
-  next: ["Scikit-learn", "PyTorch", "Computer Vision", "NLP"],
+  next: ["Scikit-Learn Math", "Scikit-learn", "PyTorch Math", "PyTorch", "Computer Vision", "NLP"],
 };
 
 export type CaseStudyBlock =
