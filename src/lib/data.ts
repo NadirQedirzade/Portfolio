@@ -35,7 +35,7 @@ export const badges = [
 
 export const aboutParagraphs = [
   "I am a Mechatronics and Robotics Engineering student at Azerbaijan Technical University, building my career toward becoming a Machine Learning Engineer. My current focus is on developing a strong foundation in data analysis, mathematics, statistics, and programming — essential skills for working effectively with machine learning.",
-  "I work with Python, NumPy, Pandas, Matplotlib, Seaborn, SQL, and Power BI, and I am currently expanding my skills in Excel to strengthen my understanding of data and analytical workflows. After building this foundation, my next step is to advance into Machine Learning and Deep Learning with Scikit-learn, PyTorch, and TensorFlow, followed by specialization in Computer Vision and Natural Language Processing."
+  "I work with Python, NumPy, Pandas, SQL, and Power BI, and I am currently expanding my skills in Excel to strengthen my understanding of data and analytical workflows. After building this foundation, my next step is to advance into Machine Learning and Deep Learning with Scikit-learn, PyTorch, and TensorFlow, followed by specialization in Computer Vision and Natural Language Processing."
 ];
 
 export const skills = {
@@ -45,8 +45,6 @@ export const skills = {
     "Statistics",
     "NumPy",
     "Pandas",
-    "Matplotlib",
-    "Seaborn",
     "SQL",
     "Power BI",
   ],
