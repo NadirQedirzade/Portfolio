@@ -34,8 +34,8 @@ export const badges = [
 ];
 
 export const aboutParagraphs = [
-  "I am a Mechatronics and Robotics Engineering student at Azerbaijan Technical University, building my career toward becoming a Machine Learning Engineer. My current focus is on developing a strong foundation in data analysis, mathematics, statistics, and programming — essential skills for working effectively with machine learning.",
-  "I work with Python, NumPy, Pandas, SQL, and Power BI, and I am currently expanding my skills in Excel to strengthen my understanding of data and analytical workflows. After building this foundation, my next step is to advance into Machine Learning and Deep Learning with Scikit-learn, PyTorch, and TensorFlow, followed by specialization in Computer Vision and Natural Language Processing."
+  "I am a Mechatronics and Robotics Engineering student at Azerbaijan Technical University, building my career toward becoming a Data Scientist. My current focus is on establishing a robust foundation in core data analytics — working with Python, NumPy, Pandas, SQL, Power BI, and Excel, alongside foundational Linear Algebra and Statistics.",
+  "Following this analytical phase, my next step is to advance into Machine Learning and Deep Learning by mastering the underlying mathematics for Scikit-learn and PyTorch, followed by hands-on implementation of both libraries. Finally, I plan to specialize in advanced domains including Computer Vision and Natural Language Processing to extract deep insights and build intelligent, data-driven solutions."
 ];
 
 export const skills = {
